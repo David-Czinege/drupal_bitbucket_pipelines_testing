@@ -21,7 +21,6 @@ RUN \
  apt-get autoclean && apt-get clean && apt-get autoremove
 
 # Setup XDebug.
-RUN echo "xdebug.max_nesting_level = 300" >> /etc/php5/apache2/conf.d/20-xdebug.ini
 RUN echo "xdebug.max_nesting_level = 300" >> /etc/php5/cli/conf.d/20-xdebug.ini
 
 RUN \
