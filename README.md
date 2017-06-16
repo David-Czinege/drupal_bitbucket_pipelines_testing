@@ -1,4 +1,5 @@
-# drupal_bitbucket_pipelines_testing
-With this environment you can test and deploy for example Drupal sites with Bitbucket Pipelines.
+# Drupal Testing Docker Environment
+
+With this environment you can test and deploy Drupal sites.
 
 This docker image is under active development!
