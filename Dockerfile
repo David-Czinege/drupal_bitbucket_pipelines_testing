@@ -30,5 +30,9 @@ RUN \
  curl -sSL https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/bin &&\
  curl -sSL https://phar.phpunit.de/phpunit-5.7.phar -o /usr/bin/phpunit  && chmod +x /usr/bin/phpunit  &&\
  curl -sSL http://codeception.com/codecept.phar -o /usr/bin/codecept && chmod +x /usr/bin/codecept &&\
+ composer global require drush/drush:8.* &&\
+ composer global require drupal/coder &&\
+ export PATH="$PATH:$HOME/.composer/vendor/bin" &&\
+ phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer &&\
  npm install --no-color --production --global gulp-cli webpack mocha grunt &&\
  rm -rf /root/.npm /root/.composer /tmp/* /var/lib/apt/lists/*
