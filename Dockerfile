@@ -85,8 +85,6 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-WORKDIR /var/www/html
-
 # Install Composer and PHPUnit
 RUN \
  curl -sSL https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/bin &&\
@@ -100,5 +98,13 @@ RUN composer global require drush/drush:8.* drupal/coder &&\
  ln -s /root/.composer/vendor/bin/phpcs /usr/local/bin/phpcs &&\
  phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
 
-VOLUME /var/www/html
-WORKDIR /var/www/html
+# Set up a virtual host for the site.
+COPY circle/circle.conf /etc/apache2/sites-available/default
+RUN a2enmod rewrite && service apache2 restart
+
+# Add circle/behatp.json to the environment
+COPY circle/behatp.json /var/custom-config/behatp.json
+RUN export BEHAT_PARAMS=$(</var/custom-config/behatp.json)
+
+VOLUME /var/www/public_html
+WORKDIR /var/www/public_html
