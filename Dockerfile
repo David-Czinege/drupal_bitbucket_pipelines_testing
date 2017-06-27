@@ -98,20 +98,5 @@ RUN composer global require drush/drush:8.* drupal/coder &&\
  ln -s /root/.composer/vendor/bin/phpcs /usr/local/bin/phpcs &&\
  phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
 
-# Set up a virtual host for the site.
-COPY circle/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY circle/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
-#COPY circle/circle.conf /etc/apache2/sites-available/000-default.conf
-RUN rm -rvf "/var/www/public_html" &&\
-  mkdir -p "/var/www/public_html" &&\
-  chown -R "$APACHE_RUN_USER:$APACHE_RUN_GROUP" "/var/www/public_html"
-RUN a2enmod rewrite && service apache2 restart
-
-# Add circle/behatp.json to the environment
-COPY circle/behatp.json /var/custom-config/behatp.json
-RUN export BEHAT_PARAMS=$(</var/custom-config/behatp.json)
-
-
-
-VOLUME /var/www/public_html
-WORKDIR /var/www/public_html
+VOLUME /var/www/html
+WORKDIR /var/www/html
